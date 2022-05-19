@@ -1,4 +1,11 @@
-import random
+import random as r
+
+from openpyxl import Workbook
+from openpyxl import load_workbook
+
+wb = load_workbook('NBAplay.xlsx')
+
+ws= wb.active
 
 class NBA:
     #Class Attributes (Apply to all instances of the class)
@@ -8,36 +15,40 @@ class NBA:
 
     def __init__(self, player, city, mascot, pos):
         #Instance Attributes (Different for every instance, but every instance has to have these)
+        #Used for guessing the players, except player is the player you are trying to guess
         self.player = player
         self.city = city
         self.mascot = mascot
         self.pos= pos
 
-#Making a new object from a class (Instantiating)
-P1 = NBA('Demar DeRozan', 'Chicago', 'Bulls','SF')
-P2 = NBA('LeBron James', 'LA', 'Lakers', 'PF')
-P3 = NBA('John Wall', 'Houston','Rockets','PG')
-P4 = NBA('Russel Westbrook', 'LA', 'Lakers', 'PG')
-P5 = NBA('Steph Curry', 'Golden State', 'Warriors', 'PG')
+#Function that creates an instance (object) of NBA to use in the game
+def PlayerPicker(row):
+    players = [] #Empty list (this is where the attributes of the instance will go from the excel file)
+    name = ws[row] #Pull specific row (player) from excel sht
+    for i in name:
+        players.append(i.value) #Append each row value to players list
+    global SecretPlay
+    SecretPlay = NBA(players[0], players[1], players[2], players[3]) #Object that spells out each attribute of the class
 
-value = [P1, P2, P3, P4, P5]
+playChoice = ['1','2','3','4','5'] #Pick which player by choosing a row 
 
-play = random.choice(value)
+PlayerPicker(r.choice(playChoice)) #Random module to make it random, insert it into the function
 
-gChoice = [1,2,3]
-g= random.choice(gChoice)
 
-while input() != play.player:
+g=1 #Used to advance the game to the next screen
+while input() != SecretPlay.player: #If input does not equal the players name, skips to the next one
     if g == 1:
-        print('He plays in ' + play.city)
+        print('He plays in ' + SecretPlay.city)
         g=2
     elif g ==2:
-        print('The mascot of his team is ' + play.mascot) 
+        print('The mascot of his team is ' + SecretPlay.mascot) 
         g=3
     elif g ==3 :
-        print ('His position is '+ play.pos)
-        g=1
-else:
+        print ('His position is '+ SecretPlay.pos)
+        g=4
+    elif g==4: #If you can't get it by here, you end
+        print('Nope! Better Luck Next Time') 
+else: #They got the right answer in time
     print('Correct!')
 
 
