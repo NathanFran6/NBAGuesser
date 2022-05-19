@@ -1,4 +1,2 @@
-# A command line game where you guess  the NBA player. 
-I will expand the database of NBA players, but for right now it's only manually made instances. 
-#A practice for all around Python: Classes, the random module, lists, and more
-#I plan to add an excel file for the database of NBA players
+# A command line game where you guess the NBA player. Uses an excel database for players, will add more players to it and update it. USed for practice to display all around skills, including using the openpyxl library for excel interaction. I may add a GUI in the future.
+
