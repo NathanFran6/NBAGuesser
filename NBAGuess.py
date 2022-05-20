@@ -30,10 +30,17 @@ def PlayerPicker(row):
     global SecretPlay
     SecretPlay = NBA(players[0], players[1], players[2], players[3]) #Object that spells out each attribute of the class
 
-playChoice = ['1','2','3','4','5'] #Pick which player by choosing a row 
+num =1
+playChoiceInt = [] #Pick which player by choosing a row 
+
+while len(playChoiceInt) < 50: #Add numbers to list for players
+    playChoiceInt.append(num)
+    num += 1 
+    
+#Converting interger list to string for pyopenxl to read
+playChoice = [str(x) for x in playChoiceInt] 
 
 PlayerPicker(r.choice(playChoice)) #Random module to make it random, insert it into the function
-
 
 g=1 #Used to advance the game to the next screen
 while input() != SecretPlay.player: #If input does not equal the players name, skips to the next one
@@ -48,9 +55,10 @@ while input() != SecretPlay.player: #If input does not equal the players name, s
         g=4
     elif g==4: #If you can't get it by here, you end
         print('Nope! Better Luck Next Time') 
+        break
 else: #They got the right answer in time
     print('Correct!')
-
+    
 
 
         
