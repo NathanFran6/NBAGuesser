@@ -13,13 +13,14 @@ class NBA:
     ball_type = 'Wilson'
     name = 'National Basketball Association'
 
-    def __init__(self, player, city, mascot, pos):
+    def __init__(self, player, team, pos, no, college):
         #Instance Attributes (Different for every instance, but every instance has to have these)
         #Used for guessing the players, except player is the player you are trying to guess
         self.player = player
-        self.city = city
-        self.mascot = mascot
-        self.pos= pos
+        self.team = team
+        self.pos = pos
+        self.no = no
+        self.college = college
 
 #Function that creates an instance (object) of NBA to use in the game
 def PlayerPicker(row):
@@ -28,12 +29,12 @@ def PlayerPicker(row):
     for i in name:
         players.append(i.value) #Append each row value to players list
     global SecretPlay
-    SecretPlay = NBA(players[0], players[1], players[2], players[3]) #Object that spells out each attribute of the class
+    SecretPlay = NBA(players[1], players[3], players[2], players[0], players[4]) #Object that spells out each attribute of the class
 
 num =1
 playChoiceInt = [] #Pick which player by choosing a row 
 
-while len(playChoiceInt) < 50: #Add numbers to list for players
+while len(playChoiceInt) < 474: #Add numbers to list for players
     playChoiceInt.append(num)
     num += 1 
     
@@ -45,16 +46,23 @@ PlayerPicker(r.choice(playChoice)) #Random module to make it random, insert it i
 g=1 #Used to advance the game to the next screen
 while input() != SecretPlay.player: #If input does not equal the players name, skips to the next one
     if g == 1:
-        print('He plays in ' + SecretPlay.city)
+        print('He plays for the '+ SecretPlay.team)
         g=2
     elif g ==2:
-        print('The mascot of his team is ' + SecretPlay.mascot) 
+        print('His position is '+ SecretPlay.pos) 
         g=3
     elif g ==3 :
-        print ('His position is '+ SecretPlay.pos)
+        print ('His number is '+ str(SecretPlay.no))
         g=4
-    elif g==4: #If you can't get it by here, you end
-        print('Nope! Better Luck Next Time') 
+    elif g == 4:
+        if SecretPlay.college == 'None':
+            print('He did not go to college')
+            g=5
+        else:
+            print('He went to ' + SecretPlay.college)
+            g=5
+    elif g==5: #If you can't get it by here, you end
+        print('Nope! Better Luck Next Time\nThe Player was '+ SecretPlay.player ) 
         break
 else: #They got the right answer in time
     print('Correct!')
